@@ -61,16 +61,18 @@ function createMockServer(payments: ReturnType<typeof createPaymentRecord>[]) {
   };
 }
 
-// ── Module-level mutable mock server (vi.mock is hoisted) ───────────────────
+// ── Hoisted mock state (vi.mock factories are hoisted) ────────────────────────
+// Must use vi.hoisted() so the factory never closes over a module-level `let`,
+// which would throw "Cannot access before initialization".
 
-let currentMockServer = createMockServer([]);
+const mockState = vi.hoisted(() => ({ current: null as any }));
 
 vi.mock('@/lib/stellar', () => ({
   get server() {
-    return currentMockServer;
+    return mockState.current;
   },
-  __setMockServer: (s: ReturnType<typeof createMockServer>) => {
-    currentMockServer = s;
+  __setMockServer: (s: any) => {
+    mockState.current = s;
   },
 }));
 
