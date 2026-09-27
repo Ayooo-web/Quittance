@@ -57,4 +57,14 @@ describe('PaymentReceipt', () => {
     );
     expect(withEmail).toContain('Email Proof');
   });
+
+  it('shows the Download Proof action with and without a customer email', () => {
+    const withoutEmail = renderToStaticMarkup(<PaymentReceipt invoice={baseInvoice} />);
+    expect(withoutEmail).toContain('Download Proof');
+
+    const withEmail = renderToStaticMarkup(
+      <PaymentReceipt invoice={{ ...baseInvoice, customerEmail: 'client@example.com' }} />
+    );
+    expect(withEmail).toContain('Download Proof');
+  });
 });
