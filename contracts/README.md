@@ -43,8 +43,10 @@ that compile for both on-chain (Soroban) and off-chain (backend) use.
 | Crate | Description |
 |---|---|
 | `amount_scale` | Convert between stroops (i128) and display units for 7-decimal assets |
+| `asset_allowlist` | MVP allowlist check — returns true only for exact asset codes `XLM` or `USDC` |
 | `fee_bps_clamp` | Clamp a basis-points value into the valid 0..=10000 range |
 | `data_key_prefix` | Prefix instance/persistent storage keys to avoid upgrade collisions |
+| `memo_collision` | Test-only in-memory guard that detects duplicate memo strings (process-local HashSet) |
 | `paid_status` | Encode/decode invoice paid status enum (Pending, Paid, Expired, Cancelled) |
 | `status_transitions` | Validate invoice status transitions for the Quittance protocol |
 | `invoice_claim` | Domain-separated SHA-256 invoice claim hash (seller + amount + memo + expiry) |
@@ -55,6 +57,7 @@ that compile for both on-chain (Soroban) and off-chain (backend) use.
 | Crate | Description |
 |---|---|
 | `destination_guard` | Reject empty and wrong-length Stellar destination addresses |
+| `event_invoice_created` | `invoice_created` event topic + data builder (symbol, invoice_id, seller, payer; amount, asset, created_at) |
 | `tx_hash_validate` | Validate 64-char hex transaction hashes |
 | `storage_ttl` | Wrap `extend_ttl` bump for instance/persistent/temporary data keys |
 | `event_invoice_paid` | Invoice-paid event topic and data builder |
